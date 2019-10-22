@@ -1,0 +1,11 @@
+multiple tax filter
+https://generatewp.com/filtering-posts-by-taxonomies-in-the-dashboard/
+
+column order
+https://code.tutsplus.com/articles/quick-tip-make-your-custom-column-sortable--wp-25095
+https://www.smashingmagazine.com/2017/12/customizing-admin-columns-wordpress/
+https://shibashake.com/wordpress-theme/add-custom-post-type-columns
+
+column wp
+https://codex.wordpress.org/Plugin_API/Filter_Reference/manage_edit-post_type_columns
+https://codex.wordpress.org/Plugin_API/Action_Reference/manage_posts_custom_column
