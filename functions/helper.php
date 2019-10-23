@@ -9,7 +9,6 @@ function set_title($post_id) {
         $post_id = $parent_id;
 
     if($_POST['post_type'] == 'account-service'){
-
       $account_service_title = '';
 
       $account_name = '';
@@ -19,6 +18,7 @@ function set_title($post_id) {
         if($acf_account_id){
           $account_name = $acf_account_id->name;
         }
+				wp_set_post_terms( $post_id, $account_term_id, 'account' );
       }
 
       $service_name = '';
@@ -28,6 +28,7 @@ function set_title($post_id) {
         if($acf_service_id){
           $service_name = $acf_service_id->name;
         }
+				wp_set_post_terms( $post_id, $service_term_id, 'service' );
       }
       $account_service_title = $account_name .' - '. $service_name;
 

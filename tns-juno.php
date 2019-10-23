@@ -37,6 +37,8 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'TNS_JUNO_VERSION', '1.0.0' );
 
+require plugin_dir_path( __FILE__ ) . 'library/carbon/autoload.php';
+
 /**
  * For autoloading classes
  * */
@@ -115,6 +117,7 @@ function run_tns_juno() {
 	$plugin = new Tns_Juno();
 	$plugin->run();
 
+	//TNS_Carbon::get_instance()->getMonthDifference('','');
 }
 //run_tns_juno();
 add_action('plugins_loaded', 'run_tns_juno');
