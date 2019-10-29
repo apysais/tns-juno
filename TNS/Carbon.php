@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use Carbon\CarbonPeriod;
 
 class TNS_Carbon{
 	/**
@@ -26,6 +27,8 @@ class TNS_Carbon{
      * @var array
      * */
     protected $vars = array();
+
+		public $carbon;
 
     /**
 	 * Return an instance of this class.
@@ -53,14 +56,34 @@ class TNS_Carbon{
 		return self::$instance;
 	}
 
-  public function __construct(){}
+  public function __construct(){
 
-  public function getMonthDifference($start, $end)
+	}
+
+	public function init()
+	{
+		$carbon = new Carbon;
+		return $carbon;
+	}
+
+	public function CarbonPeriod()
+	{
+		$carbon = new CarbonPeriod;
+		return $carbon;
+	}
+
+	public function getDate($date)
+	{
+		return Carbon::createFromFormat('d/m/Y', $date);
+	}
+
+	public function getMonthListFromDate(Carbon $start)
   {
-		$to = Carbon::createFromFormat('d/m/Y', $start);
-		$from = Carbon::createFromFormat('d/m/Y', $end);
-		$diff_in_months = $to->diffInMonths($from);
-		return $diff_in_months;
+      foreach (CarbonPeriod::create($start, '1 month', Carbon::today()) as $month) {
+          $months[$month->format('m-Y')] = $month->format('F Y');
+      }
+      return $months;
   }
+
 
 }

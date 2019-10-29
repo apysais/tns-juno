@@ -28,29 +28,35 @@ add_action( 'manage_account-service_posts_custom_column' , 'custom_account_servi
 function custom_account_service_column( $column, $post_id ) {
     switch ( $column ) {
         case 'start_date' :
-            echo get_field($column, $post_id);
+            $start_date = get_field($column, $post_id);
+						$date = TNS_Carbon::get_instance()->getDate($start_date);
+						echo $date->year . '/' . $date->month;
             break;
         case 'end_date' :
-            echo get_field($column, $post_id);
-            break;
-        case 'billing-cycles' :
-						$billing_cycle_adjustment = get_field('billing_cycle_adjustment', $post_id);
-						$start = get_field('start_date', $post_id);
-						$end = get_field('end_date', $post_id);
-						$billing_cycle = 0;
-						if($end){
-							$billing_cycle = TNS_Carbon::get_instance()->getMonthDifference($start,$end);
-						}
-						if ($billing_cycle_adjustment < 0)
-						{
-						   $n_number = preg_replace('/\D/', '', $billing_cycle_adjustment);
-							 $billing_cycle = ($billing_cycle - $n_number);
+						$start_date = get_field('start_date', $post_id);
+						$carbon_start_date = TNS_Carbon::get_instance()->init()->createFromFormat('d/m/Y', $start_date);
+
+            $end_date =  get_field($column, $post_id);
+						$str_end_date = '';
+						if($end_date){
+							$date = TNS_Carbon::get_instance()->getDate($end_date);
+							$str_end_date = $date->year . '/' . $date->month;
 						}else{
-							if($billing_cycle_adjustment != 0 ){
-								$billing_cycle = ($billing_cycle + $billing_cycle_adjustment);
+							$active = get_field('active', $post_id);
+							if($active == 'yes'){
+								if(!$carbon_start_date->isFuture()){
+									$carbon_start_date = TNS_Carbon::get_instance()->init()->now();
+								}
+								//$carbon_start_date = TNS_Carbon::get_instance()->init()->now();
+								//$end = $carbon_start_date->addMonths(1);
+								$end = $carbon_start_date;
+								$str_end_date = $end->year . '/' . $end->month;
 							}
 						}
-						echo $billing_cycle;
+						echo $str_end_date;
+            break;
+        case 'billing-cycles' :
+						echo  get_billing_cycle($post_id);
             break;
         case 'account' :
 						$account = get_field( $column, $post_id );
@@ -61,7 +67,8 @@ function custom_account_service_column( $column, $post_id ) {
 						echo $service->name;
             break;
         case 'value' :
-            echo get_field($column, $post_id);
+            $money_value = get_field($column, $post_id);
+						echo tns_money_format($money_value);
             break;
         case 'active' :
             echo get_field($column, $post_id);

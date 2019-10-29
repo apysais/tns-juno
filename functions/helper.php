@@ -8,7 +8,7 @@ function set_title($post_id) {
     if ( $parent_id = wp_is_post_revision( $post_id ) )
         $post_id = $parent_id;
 
-    if($_POST['post_type'] == 'account-service'){
+    if(isset($_POST['post_type']) && $_POST['post_type'] == 'account-service'){
       $account_service_title = '';
 
       $account_name = '';
@@ -61,3 +61,56 @@ function tns_remove_this_menu() {
     endif;
 }
 add_action( 'admin_menu', 'tns_remove_this_menu' );
+
+function get_billing_cycle($post_id)
+{
+	$billing_cycle_adjustment = get_field('billing_cycle_adjustment', $post_id);
+
+	$start = get_field('start_date', $post_id);
+	$carbon_start_date = TNS_Carbon::get_instance()->init()->createFromFormat('d/m/Y', $start);
+
+	$end = get_field('end_date', $post_id);
+	$active = get_field('active', $post_id);
+
+	$billing_cycle = 0;
+
+	if(!$end){
+		if($active == 'yes'){
+			$now = TNS_Carbon::get_instance()->init()->now();
+			if($carbon_start_date->isFuture()){
+				$end = $carbon_start_date->format('d/m/Y');
+			}else{
+				$end = $now->format('d/m/Y');
+			}
+		}
+	}
+
+	$end = TNS_Carbon::get_instance()->init()->createFromFormat('d/m/Y', $end);
+	$start = TNS_Carbon::get_instance()->init()->createFromFormat('d/m/Y', $start);
+
+	$period = TNS_Carbon::get_instance()->CarbonPeriod()->create($start, $end);
+
+	$months = [];
+	foreach($period as $month){
+		$months[$month->format('m-Y')] = $month->format('F Y');
+	}
+
+	$billing_cycle = count($months);
+
+	if ($billing_cycle_adjustment < 0)
+	{
+		 $n_number = preg_replace('/\D/', '', $billing_cycle_adjustment);
+		 $billing_cycle = ($billing_cycle - $n_number);
+	}else{
+		if($billing_cycle_adjustment != 0 ){
+			$billing_cycle = ($billing_cycle + $billing_cycle_adjustment);
+		}
+	}
+
+	return $billing_cycle;
+}
+
+function tns_money_format($money_value, $decimal = 2)
+{
+	return CURRENCY_SYMBOL . number_format($money_value, $decimal);
+}
