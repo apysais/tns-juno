@@ -71,7 +71,7 @@ class TNS_View{
 	 * @return path / string
 	 * */
 	public function get_view_folder(){
-		return wmc_get_plugin_dir();
+		return tns_get_plugin_dir();
 	}
 
 	/**

@@ -114,3 +114,10 @@ function tns_money_format($money_value, $decimal = 2)
 {
 	return CURRENCY_SYMBOL . number_format($money_value, $decimal);
 }
+
+function tns_dd($arr)
+{
+	echo '<pre>';
+	print_r($arr);
+	echo '</pre>';
+}

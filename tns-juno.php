@@ -70,9 +70,11 @@ function tns_get_text_domain(){
 	return $ret['TextDomain'];
 }
 function tns_get_plugin_dir(){
-	return plugin_dir_path( __FILE__ );
+ return plugin_dir_path( __FILE__ );
 }
-
+function tns_get_plugin_dir_url(){
+ return plugin_dir_url( __FILE__ );
+}
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-tns-juno-activator.php
@@ -99,9 +101,12 @@ register_deactivation_hook( __FILE__, 'deactivate_tns_juno' );
  * admin-specific hooks, and public-facing site hooks.
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-tns-juno.php';
+require plugin_dir_path( __FILE__ ) . 'functions/carbon.php';
 require plugin_dir_path( __FILE__ ) . 'functions/cpt.php';
 require plugin_dir_path( __FILE__ ) . 'functions/columns.php';
 require plugin_dir_path( __FILE__ ) . 'functions/helper.php';
+require plugin_dir_path( __FILE__ ) . 'functions/job-services.php';
+require plugin_dir_path( __FILE__ ) . 'functions/report-retention.php';
 
 /**
  * Begins execution of the plugin.
@@ -117,7 +122,12 @@ function run_tns_juno() {
 	$plugin = new Tns_Juno();
 	$plugin->run();
 
-	//TNS_Carbon::get_instance()->getMonthDifference('','');
+	TNS_Report_RetentionWP::get_instance()->addSubMenu();
+	if(isset($_GET['test'])){
+		$ret = tns_get_retention();
+		tns_dd($ret);
+		exit();
+	}
 }
 //run_tns_juno();
 add_action('plugins_loaded', 'run_tns_juno');

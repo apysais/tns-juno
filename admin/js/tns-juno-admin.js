@@ -28,5 +28,11 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
-
+	 $( window ).load(function() {
+			var options = {
+				dateFormat: "dd/mm/yy"
+			};
+			$('#startDate').datepicker(options);
+			$('#endDate').datepicker(options);
+	 });
 })( jQuery );
