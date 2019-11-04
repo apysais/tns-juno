@@ -16,7 +16,7 @@ function tns_get_service_dropdown($sel_value = '')
 	) );
 
 	if ( !empty($taxonomies) ) :
-	  $output = '<select id="services" name="services" class="form-control">';
+	  $output = '<select id="services" name="services" class="form-control form-control-sm">';
 		$output.= '<option value="0">Select</option>';
 	  foreach( $taxonomies as $category ) {
 			$selected = '';
@@ -39,7 +39,7 @@ function tns_get_client_dropdown($sel_value = '')
 	) );
 
 	if ( !empty($taxonomies) ) :
-	  $output = '<select id="client" name="client" class="form-control">';
+	  $output = '<select id="client" name="client" class="form-control form-control-sm">';
 		$output.= '<option value="0">Select</option>';
 	  foreach( $taxonomies as $category ) {
 			$selected = '';

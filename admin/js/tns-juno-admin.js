@@ -30,9 +30,13 @@
 	 */
 	 $( window ).load(function() {
 			var options = {
-				dateFormat: "dd/mm/yy"
+				dateFormat: "dd/mm/yy",
+				changeMonth: true,
+      	changeYear: true
 			};
+			
 			$('#startDate').datepicker(options);
 			$('#endDate').datepicker(options);
+
 	 });
 })( jQuery );

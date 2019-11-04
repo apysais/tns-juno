@@ -99,6 +99,7 @@ class Tns_Juno_Admin {
 		 * class.
 		 */
 
+		wp_enqueue_script( $this->plugin_name . '-bootstrap-js', tns_get_plugin_dir_url() . 'assets/bootstrap/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/tns-juno-admin.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name . '-chartjs', plugin_dir_url( __FILE__ ) . 'js/Chart.bundle.min.js', array(), $this->version, false );
 		if(isset($_GET['page']) && $_GET['page'] == 'report-retention'){
