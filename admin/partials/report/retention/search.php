@@ -1,7 +1,7 @@
 <a class="btn btn-primary" data-toggle="collapse" href="#filterCollapse" role="button" aria-expanded="false" aria-controls="filterCollapse">
   Show / Hide Advance Search Filters
 </a>
-<div class="collapse" id="filterCollapse">
+<div class="collapse <?php echo $show_collapse ? 'show':'';?>" id="filterCollapse">
   <form method="post" action="admin.php?page=report-retention">
     <input type="hidden" name="_method" value="report-retention">
     <h6>Select Date Range</h6>

@@ -74,6 +74,9 @@ class TNS_Report_Controller extends TNS_Base {
 			'services' => $services,
 			'client' => $client,
 		];
+
+		$show_collapse = false;
+
 		$ret = tns_get_retention($report_arg);
     $data['retention'] = $ret;
 		$data['post_request'] = $report_arg;
@@ -81,19 +84,24 @@ class TNS_Report_Controller extends TNS_Base {
 		$data['post_start_date'] = '';
 		if( isset($start_date) && $start_date){
 			$data['post_start_date'] = $start_date;
+			$show_collapse = true;
 		}
 		$data['post_end_date'] = '';
 		if( isset($end_date) && $end_date){
 			$data['post_end_date'] = $end_date;
+			$show_collapse = true;
 		}
 		$data['post_service'] = '';
 		if( isset($services) && $services){
 			$data['post_service'] = $services;
+			$show_collapse = true;
 		}
 		$data['post_client'] = '';
 		if( isset($client) && $client){
 			$data['post_client'] = $client;
+			$show_collapse = true;
 		}
+		$data['show_collapse'] = $show_collapse;
 		TNS_View::get_instance()->admin_partials('report/retention/index.php', $data);
 	}
 
