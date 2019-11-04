@@ -79,10 +79,19 @@ class TNS_Client_JobService{
 			];
 			$query_args['meta_query'][] = $start_date;
 		}
+
 		if(isset($args['end_date']) && $args['end_date']){
 			$end_date = [
 				'key'     => 'end_date',
 	      'value'   => $args['end_date'],
+			];
+			$query_args['meta_query'][] = $end_date;
+		}
+
+		if(isset($args['active']) && $args['active']){
+			$end_date = [
+				'key'     => 'active',
+	      'value'   => $args['active'],
 			];
 			$query_args['meta_query'][] = $end_date;
 		}
@@ -100,6 +109,7 @@ class TNS_Client_JobService{
 			];
 			$query_args['tax_query'][] = $tax_services;
 		}
+
 		if(isset($args['client']) && $args['client']){
 			$tax_client = [
 				'taxonomy' => 'account',

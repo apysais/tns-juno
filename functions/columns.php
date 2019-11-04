@@ -47,8 +47,6 @@ function custom_account_service_column( $column, $post_id ) {
 								if(!$carbon_start_date->isFuture()){
 									$carbon_start_date = TNS_Carbon::get_instance()->init()->now();
 								}
-								//$carbon_start_date = TNS_Carbon::get_instance()->init()->now();
-								//$end = $carbon_start_date->addMonths(1);
 								$end = $carbon_start_date;
 								$str_end_date = $end->year . '/' . $end->month;
 							}

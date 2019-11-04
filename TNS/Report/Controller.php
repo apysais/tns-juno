@@ -105,6 +105,11 @@ class TNS_Report_Controller extends TNS_Base {
 		TNS_View::get_instance()->admin_partials('report/retention/index.php', $data);
 	}
 
+	public function social_manager()
+	{
+		TNS_Report_SocialManager::get_instance()->get();
+	}
+
 	/**
 	 * Controller
 	 *
