@@ -32,6 +32,21 @@ function set_title($post_id) {
       }
       $account_service_title = $account_name .' - '. $service_name;
 
+			$start_date_ym = '';
+			if(isset($_POST['acf']['field_5dae9746b5a35'])){
+				$start_date_ym = date('Ym', strtotime($_POST['acf']['field_5dae9746b5a35']));
+				update_post_meta($post_id, 'start_date_ym', $start_date_ym);
+			}
+
+			$end_date_ym = '';
+			if(isset($_POST['acf']['field_5dae9777b5a36'])){
+				$end_date_ym = date('Ym', strtotime($_POST['acf']['field_5dae9777b5a36']));
+				update_post_meta($post_id, 'end_date_ym', $end_date_ym);
+			}
+
+			if(isset($_POST['acf']['field_5dae971cb5a34']) && $_POST['acf']['field_5dae971cb5a34'] == 'no'){
+				delete_post_meta($post_id, 'end_date_ym');
+			}
       // unhook this function so it doesn't loop infinitely
       remove_action( 'save_post', 'set_title' );
 

@@ -117,7 +117,7 @@ class TNS_Client_JobService{
 			];
 			$query_args['tax_query'][] = $tax_client;
 		}
-
+		tns_dd($query_args);
     $the_query = new WP_Query( $query_args );
     /* Restore original Post Data */
     wp_reset_postdata();
