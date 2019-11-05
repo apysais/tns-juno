@@ -44,7 +44,7 @@ function set_title($post_id) {
 				update_post_meta($post_id, 'end_date_ym', $end_date_ym);
 			}
 
-			if(isset($_POST['acf']['field_5dae971cb5a34']) && $_POST['acf']['field_5dae971cb5a34'] == 'no'){
+			if(isset($_POST['acf']['field_5dae971cb5a34']) && $_POST['acf']['field_5dae971cb5a34'] == 'yes'){
 				delete_post_meta($post_id, 'end_date_ym');
 			}
       // unhook this function so it doesn't loop infinitely

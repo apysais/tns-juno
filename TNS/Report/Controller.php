@@ -58,14 +58,15 @@ class TNS_Report_Controller extends TNS_Base {
 		if(isset($_POST['startDate']) && $_POST['startDate']){
 			$start_date = $_POST['startDate'];
 			$carbon_start_date = tns_carbon()->createFromFormat('d/m/Y', $start_date);
-			$meta_start_date = $carbon_start_date->year . $carbon_start_date->month . $carbon_start_date->day;
+			$meta_start_date = $carbon_start_date->format('Y/m/d');
 		}
 
 		$meta_end_date = '';
 		if(isset($_POST['endDate']) && $_POST['endDate']){
 			$end_date = $_POST['endDate'];
 			$carbon_end_date = tns_carbon()->createFromFormat('d/m/Y', $end_date);
-			$meta_end_date = $carbon_end_date->year . $carbon_end_date->month . $carbon_end_date->day;
+			//$meta_end_date = $carbon_end_date->year . $carbon_end_date->month . $carbon_end_date->day;
+			$meta_end_date = $carbon_end_date->format('Y/m/d');
 		}
 
 		$report_arg = [
