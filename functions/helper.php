@@ -136,3 +136,67 @@ function tns_dd($arr)
 	print_r($arr);
 	echo '</pre>';
 }
+
+function get_meta_sql_date( $pieces, $queries ) {
+    global $wpdb;
+		$start_date = '';
+		$end_date = '';
+    // get start and end date from query
+    foreach ( $queries as $q ) {
+
+        if ( !isset( $q['key'] ) ) {
+            return $pieces;
+        }
+
+        if ( 'start_date_ym' === $q['key'] ) {
+            $start_date = isset( $q['value'] ) ?  $q['value'] : '';
+        }
+        if ( 'end_date_ym' === $q['key'] ) {
+            $end_date = isset( $q['value'] ) ?  $q['value'] : '';
+        }
+    }
+
+    if ( ( '' === $start_date ) || ( '' === $end_date ) ) {
+        return $pieces;
+    }
+
+    $query = "";
+
+    // after start date AND before end date
+    $_query = " AND (
+        ( $wpdb->postmeta.meta_key = 'start_date_ym' AND ( CAST($wpdb->postmeta.meta_value AS DATE) >= %s) )
+        AND ( mt1.meta_key = 'end_date_ym' AND ( CAST(mt1.meta_value AS DATE) <= %s) )
+    )";
+    $query .= $wpdb->prepare( $_query, $start_date, $end_date );
+
+    // OR before start date AND after end end date
+    $_query = " OR (
+        ( $wpdb->postmeta.meta_key = 'start_date_ym' AND ( CAST($wpdb->postmeta.meta_value AS DATE) <= %s) )
+        AND ( mt1.meta_key = 'end_date_ym' AND ( CAST(mt1.meta_value AS DATE) >= %s) )
+    )";
+    $query .= $wpdb->prepare( $_query, $start_date, $end_date );
+
+    // OR before start date AND (before end date AND end date after start date)
+    $_query = " OR (
+        ( $wpdb->postmeta.meta_key = 'start_date_ym' AND ( CAST($wpdb->postmeta.meta_value AS DATE) <= %s) )
+        AND ( mt1.meta_key = 'end_date_ym'
+            AND ( CAST(mt1.meta_value AS DATE) <= %s )
+            AND ( CAST(mt1.meta_value AS DATE) >= %s )
+        )
+    )";
+    $query .= $wpdb->prepare( $_query, $start_date, $end_date, $start_date );
+
+    // OR after end date AND (after start date AND start date before end date) )
+    $_query = "OR (
+        ( mt1.meta_key = 'end_date_ym' AND ( CAST(mt1.meta_value AS DATE) >= %s ) )
+        AND ( $wpdb->postmeta.meta_key = 'start_date_ym'
+            AND ( CAST($wpdb->postmeta.meta_value AS DATE) >= %s )
+            AND ( CAST($wpdb->postmeta.meta_value AS DATE) <= %s )
+        )
+    )";
+    $query .= $wpdb->prepare( $_query, $end_date, $start_date, $end_date );
+
+    $pieces['where'] = $query;
+
+    return $pieces;
+}
