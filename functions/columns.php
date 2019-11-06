@@ -132,7 +132,7 @@ function wpc_add_taxonomy_filters() {
 				 echo '<select name="'.$tax_slug.'" id="'.$tax_slug.'" class="postform">';
 				 echo '<option value="">Show All '.$tax_name.'</option>';
 				 foreach ($terms as $term) {
-						 $selected = ($_GET[$tax_slug] == $term->slug) ? 'selected':'';
+						 $selected = (isset($_GET[$tax_slug]) == $term->slug) ? 'selected':'';
 						 echo '<option value="'.$term->slug.'" '.$selected.'>'.$term->name.'</option>';
 				 }
 				 echo '</select>';

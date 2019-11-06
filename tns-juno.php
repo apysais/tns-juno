@@ -126,11 +126,12 @@ function run_tns_juno() {
 
 	TNS_Report_RetentionWP::get_instance()->addSubMenu();
 	TNS_Report_SocialManagerWP::get_instance()->addSubMenu();
-	if(isset($_GET['test'])){
-		$ret = tns_get_retention();
-		tns_dd($ret);
-		exit();
-	}
+
 }
 //run_tns_juno();
 add_action('plugins_loaded', 'run_tns_juno');
+
+function init_juno(){
+
+}
+add_action('init', 'init_juno');

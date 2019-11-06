@@ -68,7 +68,7 @@ class TNS_Report_SocialManager{
 		$objService->set_wp_query($args);
 		$get_query = $objService->get_wp_query();
 
-		tns_dd($get_query);
+		//tns_dd($get_query);
 		$billing_cycle_arr = [];
 		$money_value = 0;
 

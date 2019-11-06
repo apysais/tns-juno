@@ -70,7 +70,6 @@ class TNS_Client_JobService{
 			'meta_query'			=> [],
 			'tax_query'				=> [],
     ];
-		//add_filter( 'get_meta_sql', 'get_meta_sql_date', 10, 2 );
 		//meta query
 		if(isset($args['start_date']) && $args['start_date']){
 			$start_date = [
@@ -121,7 +120,6 @@ class TNS_Client_JobService{
 		}
 		//tns_dd($query_args);
     $the_query = new WP_Query( $query_args );
-		//remove_filter( 'get_meta_sql', 'get_meta_sql_date', 10, 2 );
 		//tns_dd($the_query);
     /* Restore original Post Data */
     wp_reset_postdata();
