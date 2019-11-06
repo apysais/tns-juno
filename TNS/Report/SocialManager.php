@@ -86,102 +86,160 @@ class TNS_Report_SocialManager{
 	    }
 
 			ksort($billing_cycle_arr);
-			tns_dd($billing_cycle_arr);
+			//tns_dd($billing_cycle_arr);
 
 			$bracket_arr = [];
 			if(!empty($billing_cycle_arr)){
 				$total_value = 0;
+				$combine_total_value = 0;
+				$combine_bonus_value = 0;
+				$billing_cycle_total = 0;
 				foreach($billing_cycle_arr as $k => $v){
 					if($k <= 5){
 					//if($k >= 3 && $k <= 5){
 						//3-5 months
 						$percent = 0.01;
+						$billing_cycle = 0;
 						foreach($billing_cycle_arr[$k] as $k_one => $v_one){
+							$billing_cycle = get_billing_cycle($v_one->ID);
 							$money_value_fields = get_field('value', $v_one->ID);
 							$term_list = wp_get_post_terms($v_one->ID, 'account', ['fields' => 'names']);
+							$start = get_field('start_date', $v_one->ID);
+							$carbon_start = tns_carbon()->createFromFormat('d/m/Y', $start);
 							$bracket_arr['bracket_1']['data'][] = [
 								'id' => $v_one->ID,
 								'money_value_fields' => $money_value_fields,
-								'account' => $term_list[0],
-								'start' => get_field('start_date', $v_one->ID),
-								'end' => get_field('end_date', $v_one->ID),
+								'account' => $v_one->post_title,
+								'client' => $term_list[0],
+								'service' => 'Social Media',
+								'active' => 'yes',
+								'note' => get_field('notes', $v_one->ID),
+								'billing_cycle' => get_billing_cycle($v_one->ID),
+								'start' => $carbon_start->format('Y/m'),
+								'end' => tns_get_end_date($v_one->ID),
 								'active' => get_field('active', $v_one->ID)
 							];
 							$money_total_value = ($total_value += $money_value_fields);
+							$billing_cycle_total += $billing_cycle;
 						}
 						$total_value = array_sum(array_column($bracket_arr['bracket_1']['data'],'money_value_fields'));
 						$bracket_arr['bracket_1']['total_value'] = $total_value;
 						$bracket_arr['bracket_1']['bonus_value'] = $percent;
 						$bracket_arr['bracket_1']['total_bonus_value'] = ($total_value * $percent);
+						$bracket_arr['bracket_1']['total_billing'] = count($bracket_arr['bracket_1']['data']);
+						$bracket_arr['bracket_1']['total_billing_cycle'] = $billing_cycle_total;
+						$combine_total_value = $total_value;
+						$combine_bonus_value = $bracket_arr['bracket_1']['total_bonus_value'];
 					}elseif($k >= 6 && $k <= 8){
 						//6-8 months
 						$percent = 0.02;
+						$billing_cycle_total = 0;
 						foreach($billing_cycle_arr[$k] as $k_two => $v_two){
+							$billing_cycle = get_billing_cycle($v_two->ID);
 							$money_value_fields = get_field('value', $v_two->ID);
 							$term_list = wp_get_post_terms($v_two->ID, 'account', ['fields' => 'names']);
+							$start = get_field('start_date', $v_two->ID);
+							$carbon_start = tns_carbon()->createFromFormat('d/m/Y', $start);
 							$bracket_arr['bracket_2']['data'][] = [
 								'id' => $v_two->ID,
-								'account' => $v_two->ID,
 								'money_value_fields' => $money_value_fields,
-								'account' => $term_list[0],
-								'start' => get_field('start_date', $v_two->ID),
-								'end' => get_field('end_date', $v_two->ID),
+								'account' => $v_two->post_title,
+								'client' => $term_list[0],
+								'service' => 'Social Media',
+								'active' => 'yes',
+								'note' => get_field('notes', $v_two->ID),
+								'billing_cycle' => $billing_cycle,
+								'start' =>  $carbon_start->format('Y/m'),
+								'end' => tns_get_end_date($v_two->ID),
 								'active' => get_field('active', $v_two->ID)
 							];
 							$money_total_value = ($total_value += $money_value_fields);
+							$billing_cycle_total += $billing_cycle;
 						}
 						$total_value = array_sum(array_column($bracket_arr['bracket_2']['data'],'money_value_fields'));
 						$bracket_arr['bracket_2']['total_value'] = $total_value;
 						$bracket_arr['bracket_2']['bonus_value'] = ($percent);
 						$bracket_arr['bracket_2']['total_bonus_value'] = ($total_value * $percent);
+						$bracket_arr['bracket_2']['total_billing'] = count($bracket_arr['bracket_2']['data']);
+						$bracket_arr['bracket_2']['total_billing_cycle'] = $billing_cycle_total;
+						$combine_total_value += $total_value;
+						$combine_bonus_value += $bracket_arr['bracket_2']['total_bonus_value'];
 					}elseif($k >= 9 && $k <= 11){
 						//9-11 months
 						$percent = 0.03;
-						//$total_value = 0;
+						$billing_cycle_total = 0;
 						foreach($billing_cycle_arr[$k] as $k_three => $v_three){
+							$billing_cycle = get_billing_cycle($v_three->ID);
 							$money_value_fields = get_field('value', $v_three->ID);
 							$term_list = wp_get_post_terms($v_three->ID, 'account', ['fields' => 'names']);
+							$start = get_field('start_date', $v_three->ID);
+							$carbon_start = tns_carbon()->createFromFormat('d/m/Y', $start);
 							$bracket_arr['bracket_3']['data'][] = [
 								'id' => $v_three->ID,
 								'money_value_fields' => $money_value_fields,
-								'account' => $term_list[0],
-								'start' => get_field('start_date', $v_three->ID),
-								'end' => get_field('end_date', $v_three->ID),
+								'account' => $v_three->post_title,
+								'client' => $term_list[0],
+								'service' => 'Social Media',
+								'active' => 'yes',
+								'note' => get_field('notes', $v_three->ID),
+								'billing_cycle' => $billing_cycle,
+								'start' =>  $carbon_start->format('Y/m'),
+								'end' => tns_get_end_date($v_three->ID),
 								'active' => get_field('active', $v_three->ID)
 							];
 							$total_value = ($total_value += $money_value_fields);
+							$billing_cycle_total += $billing_cycle;
 						}
 						$total_value = array_sum(array_column($bracket_arr['bracket_3']['data'],'money_value_fields'));
 						$bracket_arr['bracket_3']['total_value'] = $total_value;
 						$bracket_arr['bracket_3']['bonus_value'] = ($percent);
 						$bracket_arr['bracket_3']['total_bonus_value'] = ($total_value * $percent);
+						$bracket_arr['bracket_3']['total_billing'] = count($bracket_arr['bracket_3']['data']);
+						$bracket_arr['bracket_3']['total_billing_cycle'] = $billing_cycle_total;
+						$combine_total_value += $total_value;
+						$combine_bonus_value += $bracket_arr['bracket_3']['total_bonus_value'];
 					}elseif($k >= 12){
 						//12+ months
 						$percent = 4;
-						//$total_value = 0;
+						$billing_cycle_total = 0;
 						foreach($billing_cycle_arr[$k] as $k_four => $v_four){
+							$billing_cycle = get_billing_cycle($v_four->ID);
 							$money_value_fields = get_field('value', $v_four->ID);
 							$term_list = wp_get_post_terms($v_four->ID, 'account', ['fields' => 'names']);
+							$start = get_field('start_date', $v_four->ID);
+							$carbon_start = tns_carbon()->createFromFormat('d/m/Y', $start);
 							$bracket_arr['bracket_4']['data'][] = [
 								'id' => $v_four->ID,
 								'money_value_fields' => $money_value_fields,
-								'account' => $term_list[0],
-								'start' => get_field('start_date', $v_four->ID),
-								'end' => get_field('end_date', $v_four->ID),
+								'account' => $v_four->post_title,
+								'client' => $term_list[0],
+								'service' => 'Social Media',
+								'active' => 'yes',
+								'note' => get_field('notes', $v_four->ID),
+								'billing_cycle' => $billing_cycle,
+								'start' =>  $carbon_start->format('Y/m'),
+								'end' => tns_get_end_date($v_four->ID),
 								'active' => get_field('active', $v_four->ID)
 							];
 							$total_value = ($total_value += $money_value_fields);
+							$billing_cycle_total += $billing_cycle;
 						}
-						$total_value = array_sum(array_column($bracket_arr['bracket_4']['data'],'money_value_fields'));;
+						$total_value = array_sum(array_column($bracket_arr['bracket_4']['data'],'money_value_fields'));
+						$combine_total_value += $total_value;
 						$bracket_arr['bracket_4']['total_value'] = $total_value;
 						$bracket_arr['bracket_4']['bonus_value'] = ($percent);
 						$bracket_arr['bracket_4']['total_bonus_value'] = ($total_value * $percent);
+						$bracket_arr['bracket_4']['total_billing'] = count($bracket_arr['bracket_4']['data']);
+						$bracket_arr['bracket_4']['total_billing_cycle'] = $billing_cycle_total;
+						$combine_total_value += $total_value;
+						$combine_bonus_value += $bracket_arr['bracket_4']['total_bonus_value'];
 					}
 				}
 			}
+			$bracket_arr['combine_total_value'] = $combine_total_value;
+			$bracket_arr['combine_bonus_value'] = $combine_bonus_value;
 
-			tns_dd($bracket_arr);
-
+			return $bracket_arr;
 		}
   }
 

@@ -108,7 +108,10 @@ class TNS_Report_Controller extends TNS_Base {
 
 	public function social_manager()
 	{
-		TNS_Report_SocialManager::get_instance()->get();
+		$data = [];
+		$ret = TNS_Report_SocialManager::get_instance()->get();
+		$data['bracket'] = $ret;
+		TNS_View::get_instance()->admin_partials('report/social/social.php', $data);
 	}
 
 	/**

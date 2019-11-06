@@ -200,3 +200,29 @@ function get_meta_sql_date( $pieces, $queries ) {
 
     return $pieces;
 }
+
+/**
+*
+**/
+function tns_get_end_date($post_id)
+{
+	$start_date = get_field('start_date', $post_id);
+	$carbon_start_date = TNS_Carbon::get_instance()->init()->createFromFormat('d/m/Y', $start_date);
+
+	$end_date =  get_field('end_date', $post_id);
+	$str_end_date = '';
+	if($end_date){
+		$date = TNS_Carbon::get_instance()->getDate($end_date);
+		$str_end_date = $date->format('Y/m');
+	}else{
+		$active = get_field('active', $post_id);
+		if($active == 'yes'){
+			if(!$carbon_start_date->isFuture()){
+				$carbon_start_date = TNS_Carbon::get_instance()->init()->now();
+			}
+			$end = $carbon_start_date;
+			$str_end_date = $end->format('Y/m');
+		}
+	}
+	return $str_end_date;
+}
