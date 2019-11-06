@@ -34,9 +34,11 @@
 				changeMonth: true,
       	changeYear: true
 			};
-			
+
 			$('#startDate').datepicker(options);
 			$('#endDate').datepicker(options);
+
+			$('.table-bracket').DataTable();
 
 	 });
 })( jQuery );

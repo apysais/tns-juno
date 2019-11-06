@@ -73,6 +73,7 @@ class Tns_Juno_Admin {
 		 * class.
 		 */
 		wp_enqueue_style( $this->plugin_name . '-bootstrap', tns_get_plugin_dir_url() . 'assets/bootstrap/bootstrap-iso.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . '-datatable', tns_get_plugin_dir_url() . 'assets/datatables/datatables.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/tns-juno-admin.css', array(), $this->version, 'all' );
 
 		if(isset($_GET['page']) && $_GET['page'] == 'report-retention'){
@@ -100,11 +101,10 @@ class Tns_Juno_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name . '-bootstrap-js', tns_get_plugin_dir_url() . 'assets/bootstrap/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . '-datatables-js', tns_get_plugin_dir_url() . 'assets/datatables/datatables.min.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/tns-juno-admin.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name . '-chartjs', plugin_dir_url( __FILE__ ) . 'js/Chart.bundle.min.js', array(), $this->version, false );
-		if(isset($_GET['page']) && $_GET['page'] == 'report-retention'){
-			wp_enqueue_script( 'jquery-ui-datepicker' );
-		}
+		wp_enqueue_script( 'jquery-ui-datepicker' );
 	}
 
 }

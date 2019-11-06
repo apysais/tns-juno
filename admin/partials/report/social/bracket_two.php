@@ -2,7 +2,7 @@
 <h5>Bracket 2 Details</h5>
 <p>Total Billing Cycles : <?php echo $bracket['bracket_2']['total_billing_cycle'];?></p>
 <p>Total Value : <?php echo tns_money_format($bracket['bracket_2']['total_value']);?></p>
-<table class="table table-bordered">
+<table class="table table-bracket table-bordered">
   <thead>
     <tr>
       <th scope="col">Name</th>

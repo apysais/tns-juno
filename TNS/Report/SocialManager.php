@@ -95,8 +95,8 @@ class TNS_Report_SocialManager{
 				$combine_bonus_value = 0;
 				$billing_cycle_total = 0;
 				foreach($billing_cycle_arr as $k => $v){
-					if($k <= 5){
-					//if($k >= 3 && $k <= 5){
+					//if($k <= 5){
+					if($k >= 3 && $k <= 5){
 						//3-5 months
 						$percent = 0.01;
 						$billing_cycle = 0;
