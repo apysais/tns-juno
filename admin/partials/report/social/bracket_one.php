@@ -26,7 +26,7 @@
           <td><?php echo $v['service'];?></td>
           <td><?php echo tns_money_format($v['money_value_fields']);?></td>
           <td><?php echo $v['active'];?></td>
-          <td><?php echo $v['note'];?></td>
+          <td><?php echo wp_trim_words($v['note'],10);?></td>
         </tr>
       <?php } ?>
     <?php } ?>

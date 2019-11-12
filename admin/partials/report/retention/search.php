@@ -22,7 +22,7 @@
       </div>
       <div class="form-group col-md-6">
         <label for="client">Active Client</label>
-        <?php tns_get_active_client_dropdown($post_client); ?>
+        <?php tns_yes_no_dropdown($post_active); ?>
       </div>
     </div>
 

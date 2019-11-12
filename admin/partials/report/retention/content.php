@@ -32,6 +32,30 @@
           <td><?php echo $v['completion']; ?></td>
           <td><?php echo $v['segment']; ?></td>
           <td><?php echo $v['combine']; ?></td>
+          <tr>
+              <td colspan="4">
+                <?php
+                  $clients = $v['who'][0];
+                ?>
+                <button type="button" class="btn btn-primary btn-sm report-see-client"
+                  data-toggle="collapse"
+                  data-target="#collapse-<?php echo $k;?>"
+                  aria-expanded="false"
+                  aria-controls="collapse-<?php echo $k;?>"
+                  style="font-size:10px;"
+                >
+                  See Account / Clients <span class="badge badge-light"><?php echo count($clients);?></span>
+                  <span class="sr-only">See Account / Clients</span>
+                </button>
+                <div class="collapse" id="collapse-<?php echo $k;?>">
+                  <div class="card card-body">
+                    <?php foreach($clients as $k => $v){
+                      echo '<p>' . $v['account'].' ['.$v['client'].']</p>';
+                    }?>
+                  </div>
+                </div>
+              </td>
+          </tr>
         </tr>
       <?php }//foreach ?>
     <?php }//if ?>

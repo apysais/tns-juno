@@ -111,3 +111,27 @@ function tns_get_active_client_dropdown($sel_value = '')
 	echo $output;
 
 }
+
+function tns_yes_no_dropdown($sel_value = '')
+{
+	$active = [
+		'yes' => 'YES',
+		'no' => 'NO',
+	];
+
+	$output = '<select id="client" name="active" class="form-control form-control-sm">';
+		$output.= '<option value="0">ALL</option>';
+		if ( !empty($active) ){
+			foreach( $active as $k => $v ) {
+				$selected = '';
+				if($sel_value == $k){
+					$selected = 'selected';
+				}
+				$output.= '<option value="'. esc_attr( $k ) .'" '.$selected.'>
+				'. esc_html( $v ) .'</option>';
+			}
+		}
+	$output.='</select>';
+	echo $output;
+
+}

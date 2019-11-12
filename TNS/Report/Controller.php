@@ -43,7 +43,6 @@ class TNS_Report_Controller extends TNS_Base {
 	public function report_retention()
 	{
     $data = [];
-
 		$services = '';
 		if(isset($_POST['services']) && $_POST['services']){
 			$services = $_POST['services'];
@@ -52,6 +51,11 @@ class TNS_Report_Controller extends TNS_Base {
 		$client = '';
 		if(isset($_POST['client']) && $_POST['client']){
 			$client = $_POST['client'];
+		}
+
+		$active = '';
+		if(isset($_POST['active']) && $_POST['active']){
+			$active = $_POST['active'];
 		}
 
 		$meta_start_date = '';
@@ -74,6 +78,7 @@ class TNS_Report_Controller extends TNS_Base {
 			'end_date' => $meta_end_date,
 			'services' => $services,
 			'client' => $client,
+			'active' => $active,
 		];
 
 		$show_collapse = false;
@@ -100,6 +105,11 @@ class TNS_Report_Controller extends TNS_Base {
 		$data['post_client'] = '';
 		if( isset($client) && $client){
 			$data['post_client'] = $client;
+			$show_collapse = true;
+		}
+		$data['post_active'] = '';
+		if( isset($active) && $active){
+			$data['post_active'] = $active;
 			$show_collapse = true;
 		}
 		$data['show_collapse'] = $show_collapse;

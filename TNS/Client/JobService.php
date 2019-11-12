@@ -90,11 +90,11 @@ class TNS_Client_JobService{
 		}
 
 		if(isset($args['active']) && $args['active']){
-			$end_date = [
+			$active = [
 				'key'     => 'active',
 	      'value'   => $args['active'],
 			];
-			$query_args['meta_query'][] = $end_date;
+			$query_args['meta_query'][] = $active;
 		}
 
 		if(!empty($start_date) && !empty($end_date)){

@@ -54,7 +54,7 @@ function custom_account_service_column( $column, $post_id ) {
             echo get_field($column, $post_id);
             break;
         case 'notes' :
-            echo get_field($column, $post_id);
+            echo wp_trim_words(get_field($column, $post_id), 10);
             break;
         case 'date' :
             break;

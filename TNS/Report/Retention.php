@@ -162,7 +162,6 @@ class TNS_Report_Retention{
 			$keep_percentage_value = 0;
 			$month = array_keys($billing_cycle_arr);
 			$data_report['month'] = $month;
-
 			foreach($month as $k => $v)
 			{
 				$calc_loop_percentage = 0;
@@ -188,15 +187,32 @@ class TNS_Report_Retention{
 					'completion' 						=> $billing_cycle_month,
 					'segment' 							=> $percentage,
 					'combine' 							=> $calc_loop_percentage,
+					'who' => [
+						$this->_whoClient($billing_cycle_arr[$v])
+					]
 				];
 	      //echo '[length of time]'.$i.' Month completion ['.$billing_cycle_month.'] segment ['.$percentage.'] combine ['.$calc_loop_percentage.']<br>';
 
 				$keep_percentage_value += $percentage;
 			}
 		}
-
-
 		return $data_report;
+	}
+
+	private function _whoClient($arr = [])
+	{
+		$data = [];
+		foreach($arr as $k => $v){
+			$client = get_field('account',  $v->ID);
+			$service = get_field('service',  $v->ID);
+			$data[] = [
+				'id' => $v->ID,
+				'account' => $v->post_title,
+				'client' => $client->name,
+				'service' => $service->name
+			];
+		}
+		return $data;
 	}
 
 }//TNS_Report_Retention

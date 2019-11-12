@@ -58,6 +58,9 @@ function set_title($post_id) {
       // update the post, which calls save_post again
       wp_update_post( array( 'ID' => $post_id, 'post_title' => $post_title ) );
 
+			$billing_cycle = get_billing_cycle($post_id);
+			update_post_meta($post_id, 'billing_cycle', $billing_cycle);
+			
       // re-hook this function
       add_action( 'save_post', 'set_title' );
     }

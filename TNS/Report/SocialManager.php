@@ -200,7 +200,7 @@ class TNS_Report_SocialManager{
 						$combine_bonus_value += $bracket_arr['bracket_3']['total_bonus_value'];
 					}elseif($k >= 12){
 						//12+ months
-						$percent = 4;
+						$percent = 0.04;
 						$billing_cycle_total = 0;
 						foreach($billing_cycle_arr[$k] as $k_four => $v_four){
 							$billing_cycle = get_billing_cycle($v_four->ID);
@@ -236,8 +236,46 @@ class TNS_Report_SocialManager{
 					}
 				}
 			}
-			$bracket_arr['combine_total_value'] = $combine_total_value;
-			$bracket_arr['combine_bonus_value'] = $combine_bonus_value;
+
+
+			$combine_bonus_value_one = 0;
+			if(isset($bracket_arr['bracket_1']['total_bonus_value'])){
+				$combine_bonus_value_one = $bracket_arr['bracket_1']['total_bonus_value'];
+			}
+			$combine_total_value_one = 0;
+			if(isset($bracket_arr['bracket_1']['total_value'])){
+				$combine_total_value_one = $bracket_arr['bracket_1']['total_value'];
+			}
+
+			$combine_bonus_value_two = 0;
+			if(isset($bracket_arr['bracket_2']['total_bonus_value'])){
+				$combine_bonus_value_two = $bracket_arr['bracket_2']['total_bonus_value'];
+			}
+			$combine_total_value_two = 0;
+			if(isset($bracket_arr['bracket_2']['total_value'])){
+				$combine_total_value_two = $bracket_arr['bracket_2']['total_value'];
+			}
+
+			$combine_bonus_value_three = 0;
+			if(isset($bracket_arr['bracket_3']['total_bonus_value'])){
+				$combine_bonus_value_three = $bracket_arr['bracket_3']['total_bonus_value'];
+			}
+			$combine_total_value_three = 0;
+			if(isset($bracket_arr['bracket_3']['total_value'])){
+				$combine_total_value_three = $bracket_arr['bracket_3']['total_value'];
+			}
+
+			$combine_bonus_value_four = 0;
+			if(isset($bracket_arr['bracket_4']['total_bonus_value'])){
+				$combine_bonus_value_four = $bracket_arr['bracket_4']['total_bonus_value'];
+			}
+			$combine_total_value_four = 0;
+			if(isset($bracket_arr['bracket_4']['total_value'])){
+				$combine_total_value_four = $bracket_arr['bracket_4']['total_value'];
+			}
+	
+			$bracket_arr['combine_total_value'] = ($combine_total_value_one + $combine_total_value_two + $combine_total_value_three + $combine_total_value_four);
+			$bracket_arr['combine_bonus_value'] = ($combine_bonus_value_one + $combine_bonus_value_two + $combine_bonus_value_three + $combine_bonus_value_four);
 
 			return $bracket_arr;
 		}
