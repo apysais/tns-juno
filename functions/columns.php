@@ -66,6 +66,7 @@ function account_service_sortable_column( $columns ) {
     $columns['start_date'] = 'start_date';
     $columns['end_date'] = 'end_date';
     $columns['active'] = 'active';
+    $columns['billing-cycles'] = 'billing_cycle';
 
     //To make a column 'un-sortable' remove it from the array
     //unset($columns['date']);
@@ -90,6 +91,10 @@ function account_service_orderby( $query ) {
     }
     if( 'active' == $orderby ) {
         $query->set('meta_key','active');
+        $query->set('orderby','meta_value_num');
+    }
+    if( 'billing_cycle' == $orderby ) {
+        $query->set('meta_key','billing_cycle');
         $query->set('orderby','meta_value_num');
     }
 }

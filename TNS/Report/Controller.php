@@ -73,12 +73,18 @@ class TNS_Report_Controller extends TNS_Base {
 			$meta_end_date = $carbon_end_date->format('Y/m/d');
 		}
 
+		$search_by = '';
+		if(isset($_POST['search-by'])){
+			$search_by = $_POST['search-by'];
+		}
+
 		$report_arg = [
 			'start_date' => $meta_start_date,
 			'end_date' => $meta_end_date,
 			'services' => $services,
 			'client' => $client,
 			'active' => $active,
+			'search_by' => $search_by,
 		];
 
 		$show_collapse = false;
@@ -110,6 +116,11 @@ class TNS_Report_Controller extends TNS_Base {
 		$data['post_active'] = '';
 		if( isset($active) && $active){
 			$data['post_active'] = $active;
+			$show_collapse = true;
+		}
+		$data['post_search_by'] = 'year';
+		if( isset($search_by) && $search_by){
+			$data['post_search_by'] = $search_by;
 			$show_collapse = true;
 		}
 		$data['show_collapse'] = $show_collapse;

@@ -71,22 +71,55 @@ class TNS_Client_JobService{
 			'tax_query'				=> [],
     ];
 		//meta query
-		if(isset($args['start_date']) && $args['start_date']){
-			$start_date = [
-				'key'     => 'start_date_ym',
-	      'value'   => date('Ym', strtotime($args['start_date'])),
-				'compare' => '>='
-			];
-			$query_args['meta_query'][] = $start_date;
+		$search_by = 'year';
+		if(isset($args['search_by'])){
+			$search_by = $args['search_by'];
 		}
 
-		if(isset($args['end_date']) && $args['end_date']){
-			$end_date = [
-				'key'     => 'end_date_ym',
-	      'value'   => date('Ym', strtotime($args['end_date'])),
-				'compare' => '<='
-			];
-			$query_args['meta_query'][] = $end_date;
+		if($search_by == 'year'){
+			if(
+				isset($args['start_date'])
+				&& $args['start_date']
+				&& $args['end_date'] == ''
+			){
+				$start_end_date = [
+	        'key'     => 'start_date_y',
+	        'value'   => date('Y', strtotime($args['start_date'])),
+	        'compare' => '='
+	      ];
+			}elseif($args['start_date'] != '' && $args['end_date'] != ''){
+				$_start = date('Y', strtotime($args['start_date']));
+				$_end = date('Y', strtotime($args['end_date']));
+				$start_end_date = [
+	        'key'     => 'start_date_y',
+	        'value'   => [$_start, $_end],
+	        'type'   => 'numeric',
+	        'compare' => 'BETWEEN'
+	      ];
+			}
+			$query_args['meta_query'][] = $start_end_date;
+		}else{
+			if(
+				isset($args['start_date'])
+				&& $args['start_date']
+				&& $args['end_date'] == ''
+			){
+				$start_end_date = [
+	        'key'     => 'start_date_y',
+	        'value'   => date('Ym', strtotime($args['start_date'])),
+	        'compare' => '<='
+	      ];
+			}elseif($args['start_date'] != '' && $args['end_date'] != ''){
+				$_start = date('Ym', strtotime($args['start_date']));
+				$_end = date('Ym', strtotime($args['end_date']));
+				$start_end_date = [
+	        'key'     => 'start_date_y',
+	        'value'   => [$_start, $_end],
+	        'type'   => 'numeric',
+	        'compare' => 'BETWEEN'
+	      ];
+			}
+			$query_args['meta_query'][] = $start_end_date;
 		}
 
 		if(isset($args['active']) && $args['active']){
@@ -95,11 +128,6 @@ class TNS_Client_JobService{
 	      'value'   => $args['active'],
 			];
 			$query_args['meta_query'][] = $active;
-		}
-
-		if(!empty($start_date) && !empty($end_date)){
-			//$query_args['meta_query']['relation'] = 'OR';
-			//$query_args['meta_query'][1]['compare'] = '<=';
 		}
 
 		//tax query
@@ -118,6 +146,7 @@ class TNS_Client_JobService{
 			];
 			$query_args['tax_query'][] = $tax_client;
 		}
+
 		//tns_dd($query_args);
     $the_query = new WP_Query( $query_args );
 		//tns_dd($the_query);

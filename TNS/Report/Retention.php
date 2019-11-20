@@ -86,6 +86,7 @@ class TNS_Report_Retention{
 
     $billing_cycle_arr = [];
 		$money_value = 0;
+
     foreach($data as $k => $v){
       $loop_billing_cycle = get_billing_cycle($v->ID);
 
@@ -133,7 +134,6 @@ class TNS_Report_Retention{
     $month_in_year = 12;
 
     $get_job_services = new TNS_Client_JobService;
-
   	$get_job_services->set_wp_query($report_arg);
   	$get_query = $get_job_services->get_wp_query();
 
@@ -146,6 +146,7 @@ class TNS_Report_Retention{
 
 	    $billing_cycle_arr = [];
 			$money_value = 0;
+			//tns_dd($data);
 	    foreach($data as $k => $v){
 	      $loop_billing_cycle = get_billing_cycle($v->ID);
 

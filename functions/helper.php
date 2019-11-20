@@ -38,10 +38,22 @@ function set_title($post_id) {
 				update_post_meta($post_id, 'start_date_ym', $start_date_ym);
 			}
 
+			$start_date_y = '';
+			if(isset($_POST['acf']['field_5dae9746b5a35'])){
+				$start_date_y = date('Y', strtotime($_POST['acf']['field_5dae9746b5a35']));
+				update_post_meta($post_id, 'start_date_y', $start_date_y);
+			}
+
 			$end_date_ym = '';
 			if(isset($_POST['acf']['field_5dae9777b5a36'])){
 				$end_date_ym = date('Ym', strtotime($_POST['acf']['field_5dae9777b5a36']));
 				update_post_meta($post_id, 'end_date_ym', $end_date_ym);
+			}
+
+			$end_date_y = '';
+			if(isset($_POST['acf']['field_5dae9777b5a36'])){
+				$end_date_y = date('Y', strtotime($_POST['acf']['field_5dae9777b5a36']));
+				update_post_meta($post_id, 'end_date_y', $end_date_y);
 			}
 
 			if(isset($_POST['acf']['field_5dae971cb5a34']) && $_POST['acf']['field_5dae971cb5a34'] == 'yes'){
@@ -60,7 +72,7 @@ function set_title($post_id) {
 
 			$billing_cycle = get_billing_cycle($post_id);
 			update_post_meta($post_id, 'billing_cycle', $billing_cycle);
-			
+
       // re-hook this function
       add_action( 'save_post', 'set_title' );
     }

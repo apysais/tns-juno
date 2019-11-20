@@ -7,11 +7,16 @@
     <h6>Select Date Range</h6>
     <div class="form-row">
       <div class="form-group col-md-5">
-        <label for="startDate">Start Date</label>
+        <label for="startDate">Beggin Start Date</label>
         <input type="text" name="startDate" value="<?php echo $post_start_date;?>" class="form-control form-control-sm" id="startDate" autocomplete="off">
+        <p>Search By Year and Month / Or By Year</p>
+        <select name="search-by">
+          <option value="year" <?php echo ($post_search_by == 'year') ? 'selected':'';?>>By Year</option>
+          <option value="full" <?php echo ($post_search_by == 'full') ? 'selected':'';?>>Year and Month</option>
+        </select>
       </div>
       <div class="form-group col-md-5">
-        <label for="endDate">End Date</label>
+        <label for="endDate">Finish Start Date</label>
         <input type="text" name="endDate" value="<?php echo $post_end_date;?>" class="form-control form-control-sm" id="endDate" autocomplete="off">
       </div>
     </div>
