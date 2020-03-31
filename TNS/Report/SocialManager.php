@@ -75,7 +75,7 @@ class TNS_Report_SocialManager{
 		if($get_query){
 			foreach($get_query->posts as $k => $v){
 	      $loop_billing_cycle = get_billing_cycle($v->ID);
-
+				//tns_dd($loop_billing_cycle);
 				$money_value_fields = get_field('value', $v->ID);
 				$data_report['combine_value'] = ($money_value += $money_value_fields);
 
@@ -132,6 +132,7 @@ class TNS_Report_SocialManager{
 						$combine_bonus_value = $bracket_arr['bracket_1']['total_bonus_value'];
 					}elseif($k >= 6 && $k <= 8){
 						//6-8 months
+
 						$percent = 0.02;
 						$billing_cycle_total = 0;
 						foreach($billing_cycle_arr[$k] as $k_two => $v_two){
@@ -273,7 +274,7 @@ class TNS_Report_SocialManager{
 			if(isset($bracket_arr['bracket_4']['total_value'])){
 				$combine_total_value_four = $bracket_arr['bracket_4']['total_value'];
 			}
-	
+
 			$bracket_arr['combine_total_value'] = ($combine_total_value_one + $combine_total_value_two + $combine_total_value_three + $combine_total_value_four);
 			$bracket_arr['combine_bonus_value'] = ($combine_bonus_value_one + $combine_bonus_value_two + $combine_bonus_value_three + $combine_bonus_value_four);
 

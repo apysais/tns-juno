@@ -75,7 +75,7 @@ class TNS_Client_JobService{
 		if(isset($args['search_by'])){
 			$search_by = $args['search_by'];
 		}
-
+		$start_end_date = '';
 		if($search_by == 'year'){
 			if(
 				isset($args['start_date'])
@@ -87,7 +87,7 @@ class TNS_Client_JobService{
 	        'value'   => date('Y', strtotime($args['start_date'])),
 	        'compare' => '='
 	      ];
-			}elseif($args['start_date'] != '' && $args['end_date'] != ''){
+			}elseif(isset($args['start_date']) && $args['start_date'] != '' && $args['end_date'] != ''){
 				$_start = date('Y', strtotime($args['start_date']));
 				$_end = date('Y', strtotime($args['end_date']));
 				$start_end_date = [
@@ -105,15 +105,16 @@ class TNS_Client_JobService{
 				&& $args['end_date'] == ''
 			){
 				$start_end_date = [
-	        'key'     => 'start_date_y',
+	        'key'     => 'start_date_ym',
 	        'value'   => date('Ym', strtotime($args['start_date'])),
-	        'compare' => '<='
+	        'compare' => '='
 	      ];
 			}elseif($args['start_date'] != '' && $args['end_date'] != ''){
+
 				$_start = date('Ym', strtotime($args['start_date']));
 				$_end = date('Ym', strtotime($args['end_date']));
 				$start_end_date = [
-	        'key'     => 'start_date_y',
+	        'key'     => 'start_date_ym',
 	        'value'   => [$_start, $_end],
 	        'type'   => 'numeric',
 	        'compare' => 'BETWEEN'

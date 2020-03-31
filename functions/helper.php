@@ -103,9 +103,17 @@ function get_billing_cycle($post_id)
 	$active = get_field('active', $post_id);
 
 	$billing_cycle = 0;
-
 	if(!$end){
 		if($active == 'yes'){
+			$now = TNS_Carbon::get_instance()->init()->now();
+			if($carbon_start_date->isFuture()){
+				$end = $carbon_start_date->format('d/m/Y');
+			}else{
+				$end = $now->format('d/m/Y');
+			}
+		}
+	}else{
+		if($active == 'yes') {
 			$now = TNS_Carbon::get_instance()->init()->now();
 			if($carbon_start_date->isFuture()){
 				$end = $carbon_start_date->format('d/m/Y');
@@ -117,16 +125,13 @@ function get_billing_cycle($post_id)
 
 	$end = TNS_Carbon::get_instance()->init()->createFromFormat('d/m/Y', $end);
 	$start = TNS_Carbon::get_instance()->init()->createFromFormat('d/m/Y', $start);
-
 	$period = TNS_Carbon::get_instance()->CarbonPeriod()->create($start, $end);
-
 	$months = [];
 	foreach($period as $month){
 		$months[$month->format('m-Y')] = $month->format('F Y');
 	}
 
 	$billing_cycle = count($months);
-
 	if ($billing_cycle_adjustment < 0)
 	{
 		 $n_number = preg_replace('/\D/', '', $billing_cycle_adjustment);

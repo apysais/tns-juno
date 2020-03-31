@@ -37,8 +37,8 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'TNS_JUNO_VERSION', '1.0.0' );
 define('CURRENCY_SYMBOL', '$');
-//define('TNS_SOCIAL_MANAGER_TERM_ID', 8);
 define('TNS_SOCIAL_MANAGER_TERM_ID', 2);
+//define('TNS_SOCIAL_MANAGER_TERM_ID', 2);
 require plugin_dir_path( __FILE__ ) . 'library/carbon/autoload.php';
 
 /**

@@ -65,6 +65,7 @@ add_filter( 'manage_edit-account-service_sortable_columns', 'account_service_sor
 function account_service_sortable_column( $columns ) {
     $columns['start_date'] = 'start_date';
     $columns['end_date'] = 'end_date';
+    $columns['value'] = 'value';
     $columns['active'] = 'active';
     $columns['billing-cycles'] = 'billing_cycle';
 
@@ -89,12 +90,16 @@ function account_service_orderby( $query ) {
         $query->set('meta_key','end_date');
         $query->set('orderby','meta_value_num');
     }
-    if( 'active' == $orderby ) {
+    if( 'active' === $orderby ) {
         $query->set('meta_key','active');
-        $query->set('orderby','meta_value_num');
+        $query->set('orderby','meta_value');
     }
     if( 'billing_cycle' == $orderby ) {
         $query->set('meta_key','billing_cycle');
+        $query->set('orderby','meta_value_num');
+    }
+    if( 'value' == $orderby ) {
+        $query->set('meta_key','value');
         $query->set('orderby','meta_value_num');
     }
 }

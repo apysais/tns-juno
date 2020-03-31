@@ -118,7 +118,7 @@ class TNS_Report_Controller extends TNS_Base {
 			$data['post_active'] = $active;
 			$show_collapse = true;
 		}
-		$data['post_search_by'] = 'year';
+		$data['post_search_by'] = 'full';
 		if( isset($search_by) && $search_by){
 			$data['post_search_by'] = $search_by;
 			$show_collapse = true;
